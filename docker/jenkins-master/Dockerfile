@@ -1,4 +1,4 @@
-FROM jenkinsci/jenkins:lts
+FROM jenkins/jenkins:lts
 
 COPY jenkins_home/ /jenkins_tmp/
 USER root
