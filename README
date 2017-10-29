@@ -1,7 +1,0 @@
-# Mattermost build
-
-Jenkins automation for building mattermost
-
-### Command to hook up new kuberntes cluster to docker repository
-
-kubectl create secret docker-registry myregistrykey --docker-server=mmjenkins.azurecr.io --docker-username=DOCKER_USER --docker-password=DOCKER_PASSWORD --docker-email=dev-ops@mattermost.com
