@@ -12,6 +12,7 @@ kubectl create secret docker-registry myregistrykey --docker-server=mmjenkins.az
 
 ## Prerequisites
 - virtualization platform
+- docker
 - install `minikube`, `kubectl`, `helm` by following instructions here:
   - [minikube](https://github.com/kubernetes/minikube/releases)
   - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
@@ -35,6 +36,11 @@ minikube start --memory 8192 --cpus 4 --mount
 ```
 Config is stored in `~/.minikube`
 
+enable ingress
+```
+minikube addons enable ingress
+```
+
 Add `helm` repos
 ```
 
@@ -51,12 +57,13 @@ git clone https://github.com/mattermost/mattermost-build.git
 cd mattermost-build
 ```
 
-Need charts for nginx-ingress, kube-lego
+Pull dependent charts
 ```
-cd mattermost-jenkins/charts
-helm fetch stable/nginx-ingress --version 0.8.4
-helm fetch stable/kube-lego --version 0.1.11
+cd mattermost-jenkins
+helm dep update
 ```
+
+Looks like `mattermost-jenkins/charts/jenkins` & `mattermost-jenkins/requirements.lock` can be removed
 
 ## Deploy build server
 
@@ -72,6 +79,11 @@ Now all `docker` commands on the host will actually run inside the `minikube` VM
 make deploy-local
 ```
 
+Login to Jenkins using service URL
+```
+minikube service list
+```
+
 Launch the `minikube` dashboard
 ```
 minikube dashboard
@@ -84,7 +96,7 @@ TBD
 ## Cleanup
 
 ```
-make destroy
+make nuke
 ```
 
 ## Issues

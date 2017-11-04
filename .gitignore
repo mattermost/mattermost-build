@@ -20,3 +20,5 @@ docker/jenkins-master/jenkins_home/secret*
 docker/jenkins-master/jenkins_home/secrets
 
 *.tgz
+
+mattermost-jenkins/requirements.lock
