@@ -58,6 +58,7 @@ install-persistent-volume:           ## Install persistent volume
 delete:          ## clean and delete releases
 delete: clean
 	helm delete --purge build-mattermost-com || echo notfound
+	kubectl delete pods --all
 
 nuke:            ## Delete all VMs and run clean
 nuke: clean

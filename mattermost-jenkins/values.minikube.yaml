@@ -9,7 +9,6 @@ jenkins:
     #    ImageTag: latest
     #    ImagePullSecrets:
     #     - name: myregistrykey
-    AdminPassword: admin
     ImagePullPolicy: Never
     Ingress:
       Annotations:
