@@ -21,6 +21,7 @@ install: all
 
 deploy: install
 	helm upgrade --recreate-pods build-mattermost-com ./mattermost-jenkins/mattermost-jenkins-*.tgz
+	cd aws && ./updateip.sh
 
 redeploy: install
 	helm delete --purge build-mattermost-com || echo notfound

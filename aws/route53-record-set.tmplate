@@ -1,0 +1,18 @@
+{
+  "Comment": "Updating record from newbuild redeploy",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "newbuild.mattermost.com",
+        "Type": "A",
+        "TTL": 30,
+        "ResourceRecords": [
+          {
+            "Value": "IP_ADDRESS"
+          }
+        ]
+      }
+    }
+  ]
+}
