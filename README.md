@@ -41,11 +41,6 @@ enable ingress
 minikube addons enable ingress
 ```
 
-Add `helm` repos
-```
-
-```
-
 Add `tiller` to the Kube cluster
 ```
 helm init
