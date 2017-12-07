@@ -12,20 +12,11 @@ help:            ## Show this help.
 	@egrep '^(.+)\:\ +##(.+)' ${MAKEFILE_LIST} | column -t -c 2 -s '#'
 
 all:             ## Add secrets from private dir, build docker image and chart archive
-ifeq ($(HAS_PRIVATE),true)
-	cp -r $(BUILD_PRIVATE_DIR)/jenkins_home/* docker/jenkins-master/jenkins_home/
-endif
-	docker build ./docker/jenkins-master/ -t $(DOCKER_TARGET)
-
-	rm -f mattermost-jenkins/mattermost-jenkins*.tgz
+	cd mattermost-jenkins && helm dependency update
 	cd mattermost-jenkins && helm package .
 
-install:         ## all + Push docker image to Azure
-install: all
-	docker push mmjenkins.azurecr.io/jenkins-master
-
 deploy:          ## install + Rebuild pods
-deploy: install
+deploy: all
 	helm upgrade --recreate-pods build-mattermost-com ./mattermost-jenkins/mattermost-jenkins-*.tgz
 	cd aws && ./updateip.sh
 
@@ -35,9 +26,10 @@ deploy-local: all
 	helm upgrade --install --recreate-pods build-mattermost-com --values ./mattermost-jenkins/values.minikube.yaml ./mattermost-jenkins/mattermost-jenkins-*.tgz
 
 redeploy:        ## install + delete releases and redeploy
-redeploy: install
+redeploy: all
 	helm delete --purge build-mattermost-com || echo notfound
 	cd mattermost-jenkins && helm install mattermost-jenkins-*.tgz -n build-mattermost-com
+	cd aws && ./updateip.sh
 
 redeploy-local: ## Delete releases and redeploy locally wihtout pushing to Docker repo
 redeploy-local: DOCKER_TARGET := local/jenkins-master

@@ -1,19 +1,13 @@
 jenkins:
-  Persistence:
-    Enabled: false
-    ExistingClaim: 'build-mattermost-com-jenkins'
-    Size: 100Gi
   Master:
     HostName: newbuild.mattermost.com
-    Image: mmjenkins.azurecr.io/jenkins-master
-    ImageTag: latest
-    ImagePullSecrets:
-        - name: myregistrykey
     ImagePullPolicy: Always
+    Image: jenkins/jenkins
+    ImageTag: lts-alpine
     Ingress:
       Annotations:
         kubernetes.io/tls-acme: "true"
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: "nginx"
         ingress.kubernetes.io/force-ssl-redirect: "true"
       TLS:
       - secretName: newbuild-tls
@@ -21,6 +15,7 @@ jenkins:
         - newbuild.mattermost.com
     ServiceType: ClusterIP
     ServicePort: 8080
+    CustomConfigMap: false
     InstallPlugins:
       - kubernetes
       - workflow-aggregator
@@ -29,8 +24,12 @@ jenkins:
       - build-pipeline-plugin
       - github-branch-source
       - s3
-      - active-directory
       - rebuild
+      - saml
+  Persistence:
+    Enabled: true
+    ExistingClaim: 'build-mattermost-com-jenkins'
+    Size: 100Gi
 kube-lego:
   config:
     LEGO_EMAIL: dev-ops@mattermost.com

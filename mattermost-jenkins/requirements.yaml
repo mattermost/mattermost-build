@@ -1,10 +1,10 @@
 dependencies:
   - name: jenkins
-    version: 0.8.9
+    version: 0.10.1
     repository: https://kubernetes-charts.storage.googleapis.com
   - name: nginx-ingress
-    version: 0.8.4
+    version: 0.8.14
     repository: https://kubernetes-charts.storage.googleapis.com
   - name: kube-lego
-    version: 0.1.11
+    version: 0.3.0
     repository: https://kubernetes-charts.storage.googleapis.com

@@ -22,3 +22,4 @@ docker/jenkins-master/jenkins_home/secrets
 *.tgz
 
 mattermost-jenkins/requirements.lock
+mattermost-jenkins/charts

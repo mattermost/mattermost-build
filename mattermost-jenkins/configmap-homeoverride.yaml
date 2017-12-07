@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: mattermost-jenkins-home-override
+data:
+{{ (.Files.Glob "files/jenkins_home/*").AsConfig | indent 2 }}
+{{ (.Files.Glob "files/jenkins_home/jobs/mattermost-webapp").AsConfig | indent 2 }}
